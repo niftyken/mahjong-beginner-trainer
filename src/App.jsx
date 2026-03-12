@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
 import { recognitionQuestions } from './data/recognitionQuestions'
 import { puzzleQuestions } from './data/puzzleQuestions'
+import { discardQuestions } from './data/discardQuestions'
 import RecognitionModule from './modules/RecognitionModule'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
 import PuzzleModule from './modules/PuzzleModule'
+import DiscardModule from './modules/DiscardModule'
 
 export default function App() {
   const [showChinese, setShowChinese] = useState(true)
@@ -16,18 +18,22 @@ export default function App() {
   const [puzzleIndex, setPuzzleIndex] = useState(0)
   const [puzzleSelected, setPuzzleSelected] = useState(null)
 
+  const [discardIndex, setDiscardIndex] = useState(0)
+  const [discardSelected, setDiscardSelected] = useState(null)
+
   const [selectedTile, setSelectedTile] = useState('b2')
 
   const completed = useMemo(
     () => ({
       recognition: recognitionIndex >= recognitionQuestions.length,
       puzzle: puzzleIndex >= puzzleQuestions.length,
+      discard: discardIndex >= discardQuestions.length,
     }),
-    [recognitionIndex, puzzleIndex]
+    [recognitionIndex, puzzleIndex, discardIndex]
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
-  const progress = (completedCount / 2) * 100
+  const progress = (completedCount / 3) * 100
 
   function nextRecognition() {
     if (recognitionIndex < recognitionQuestions.length - 1) {
@@ -49,6 +55,16 @@ export default function App() {
     }
   }
 
+  function nextDiscard() {
+    if (discardIndex < discardQuestions.length - 1) {
+      setDiscardIndex(discardIndex + 1)
+      setDiscardSelected(null)
+    } else {
+      setDiscardIndex(discardQuestions.length)
+      setDiscardSelected(null)
+    }
+  }
+
   return (
     <div className="container">
       <div className="hero-grid">
@@ -62,12 +78,12 @@ export default function App() {
                 style Mahjong, with optional Cantonese tile names and table phrases.
               </p>
             </div>
-            <span className="badge">React v4</span>
+            <span className="badge">React v5</span>
           </div>
 
           <div className="row" style={{ marginTop: 14 }}>
             <div className="small muted">
-              Progress: {completedCount} / 2 core modules complete
+              Progress: {completedCount} / 3 core modules complete
             </div>
             <button
               className="secondary"
@@ -105,7 +121,7 @@ export default function App() {
 
       <div className="main-grid" style={{ marginTop: 16 }}>
         <div>
-          <div className="tabs four-tabs">
+          <div className="tabs five-tabs">
             <button
               className={`tab ${activeTab === 'recognition' ? 'active' : ''}`}
               onClick={() => setActiveTab('recognition')}
@@ -119,6 +135,13 @@ export default function App() {
               type="button"
             >
               14-Tile
+            </button>
+            <button
+              className={`tab ${activeTab === 'discard' ? 'active' : ''}`}
+              onClick={() => setActiveTab('discard')}
+              type="button"
+            >
+              Discard
             </button>
             <button
               className={`tab ${activeTab === 'vocabulary' ? 'active' : ''}`}
@@ -156,6 +179,16 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'discard' && (
+            <DiscardModule
+              showChinese={showChinese}
+              discardIndex={discardIndex}
+              discardSelected={discardSelected}
+              setDiscardSelected={setDiscardSelected}
+              nextDiscard={nextDiscard}
+            />
+          )}
+
           {activeTab === 'vocabulary' && (
             <VocabularyModule
               showChinese={showChinese}
@@ -171,16 +204,14 @@ export default function App() {
           <div className="card">
             <h2>Why this version matters</h2>
             <div className="small muted" style={{ marginTop: 10 }}>
-              The app now has more than one real training module, so the
-              structure is starting to behave like a real curriculum.
+              The app now includes recognition, full-hand evaluation, and first-step discard strategy, which makes it feel much more like a real beginner curriculum.
             </div>
           </div>
 
           <div className="card">
             <h2>Next milestones</h2>
             <div className="small muted" style={{ marginTop: 10 }}>
-              Add a discard trainer, then a tenpai trainer, and then consider
-              moving progress tracking into a dedicated custom hook.
+              Add a tenpai trainer, then consider randomizing question order or moving progress logic into a reusable hook.
             </div>
           </div>
         </div>

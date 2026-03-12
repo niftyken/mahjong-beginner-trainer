@@ -273,6 +273,10 @@ h1{
   grid-template-columns:repeat(4,minmax(0,1fr));
 }
 
+.five-tabs{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+}
+
 @media (max-width:860px){
   .hero-grid,
   .main-grid{
@@ -283,6 +287,7 @@ h1{
 @media (max-width:560px){
   .tabs,
   .four-tabs,
+  .five-tabs,
   .options,
   .phrase-grid{
     grid-template-columns:1fr;
