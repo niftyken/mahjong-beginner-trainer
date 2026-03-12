@@ -2,11 +2,13 @@ import { useMemo, useState } from 'react'
 import { recognitionQuestions } from './data/recognitionQuestions'
 import { puzzleQuestions } from './data/puzzleQuestions'
 import { discardQuestions } from './data/discardQuestions'
+import { tenpaiQuestions } from './data/tenpaiQuestions'
 import RecognitionModule from './modules/RecognitionModule'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
 import PuzzleModule from './modules/PuzzleModule'
 import DiscardModule from './modules/DiscardModule'
+import TenpaiModule from './modules/TenpaiModule'
 
 export default function App() {
   const [showChinese, setShowChinese] = useState(true)
@@ -21,6 +23,9 @@ export default function App() {
   const [discardIndex, setDiscardIndex] = useState(0)
   const [discardSelected, setDiscardSelected] = useState(null)
 
+  const [tenpaiIndex, setTenpaiIndex] = useState(0)
+  const [tenpaiSelected, setTenpaiSelected] = useState(null)
+
   const [selectedTile, setSelectedTile] = useState('b2')
 
   const completed = useMemo(
@@ -28,12 +33,13 @@ export default function App() {
       recognition: recognitionIndex >= recognitionQuestions.length,
       puzzle: puzzleIndex >= puzzleQuestions.length,
       discard: discardIndex >= discardQuestions.length,
+      tenpai: tenpaiIndex >= tenpaiQuestions.length,
     }),
-    [recognitionIndex, puzzleIndex, discardIndex]
+    [recognitionIndex, puzzleIndex, discardIndex, tenpaiIndex]
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
-  const progress = (completedCount / 3) * 100
+  const progress = (completedCount / 4) * 100
 
   function nextRecognition() {
     if (recognitionIndex < recognitionQuestions.length - 1) {
@@ -65,6 +71,16 @@ export default function App() {
     }
   }
 
+  function nextTenpai() {
+    if (tenpaiIndex < tenpaiQuestions.length - 1) {
+      setTenpaiIndex(tenpaiIndex + 1)
+      setTenpaiSelected(null)
+    } else {
+      setTenpaiIndex(tenpaiQuestions.length)
+      setTenpaiSelected(null)
+    }
+  }
+
   return (
     <div className="container">
       <div className="hero-grid">
@@ -78,12 +94,12 @@ export default function App() {
                 style Mahjong, with optional Cantonese tile names and table phrases.
               </p>
             </div>
-            <span className="badge">React v5</span>
+            <span className="badge">React v6</span>
           </div>
 
           <div className="row" style={{ marginTop: 14 }}>
             <div className="small muted">
-              Progress: {completedCount} / 3 core modules complete
+              Progress: {completedCount} / 4 core modules complete
             </div>
             <button
               className="secondary"
@@ -121,7 +137,7 @@ export default function App() {
 
       <div className="main-grid" style={{ marginTop: 16 }}>
         <div>
-          <div className="tabs five-tabs">
+          <div className="tabs six-tabs">
             <button
               className={`tab ${activeTab === 'recognition' ? 'active' : ''}`}
               onClick={() => setActiveTab('recognition')}
@@ -142,6 +158,13 @@ export default function App() {
               type="button"
             >
               Discard
+            </button>
+            <button
+              className={`tab ${activeTab === 'tenpai' ? 'active' : ''}`}
+              onClick={() => setActiveTab('tenpai')}
+              type="button"
+            >
+              Tenpai
             </button>
             <button
               className={`tab ${activeTab === 'vocabulary' ? 'active' : ''}`}
@@ -189,6 +212,16 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'tenpai' && (
+            <TenpaiModule
+              showChinese={showChinese}
+              tenpaiIndex={tenpaiIndex}
+              tenpaiSelected={tenpaiSelected}
+              setTenpaiSelected={setTenpaiSelected}
+              nextTenpai={nextTenpai}
+            />
+          )}
+
           {activeTab === 'vocabulary' && (
             <VocabularyModule
               showChinese={showChinese}
@@ -204,14 +237,16 @@ export default function App() {
           <div className="card">
             <h2>Why this version matters</h2>
             <div className="small muted" style={{ marginTop: 10 }}>
-              The app now includes recognition, full-hand evaluation, and first-step discard strategy, which makes it feel much more like a real beginner curriculum.
+              The curriculum now covers tile recognition, full-hand evaluation,
+              discard judgment, and one-tile-away recognition.
             </div>
           </div>
 
           <div className="card">
             <h2>Next milestones</h2>
             <div className="small muted" style={{ marginTop: 10 }}>
-              Add a tenpai trainer, then consider randomizing question order or moving progress logic into a reusable hook.
+              Randomize question order, add a restart/reset mechanism, and then
+              consider extracting module progress logic into a reusable hook.
             </div>
           </div>
         </div>

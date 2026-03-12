@@ -277,6 +277,26 @@ h1{
   grid-template-columns:repeat(5,minmax(0,1fr));
 }
 
+.six-tabs{
+  grid-template-columns:repeat(6,minmax(0,1fr));
+}
+
+.one-away-grid{
+  align-items:start;
+}
+
+.empty-slot{
+  border:2px dashed var(--border);
+  border-radius:18px;
+  min-height:92px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  color:var(--muted);
+  background:var(--soft);
+}
+
 @media (max-width:860px){
   .hero-grid,
   .main-grid{
@@ -288,6 +308,7 @@ h1{
   .tabs,
   .four-tabs,
   .five-tabs,
+  .six-tabs,
   .options,
   .phrase-grid{
     grid-template-columns:1fr;
