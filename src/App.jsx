@@ -1,25 +1,33 @@
 import { useMemo, useState } from 'react'
 import { recognitionQuestions } from './data/recognitionQuestions'
+import { puzzleQuestions } from './data/puzzleQuestions'
 import RecognitionModule from './modules/RecognitionModule'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
+import PuzzleModule from './modules/PuzzleModule'
 
 export default function App() {
   const [showChinese, setShowChinese] = useState(true)
   const [activeTab, setActiveTab] = useState('recognition')
+
   const [recognitionIndex, setRecognitionIndex] = useState(0)
   const [recognitionSelected, setRecognitionSelected] = useState(null)
+
+  const [puzzleIndex, setPuzzleIndex] = useState(0)
+  const [puzzleSelected, setPuzzleSelected] = useState(null)
+
   const [selectedTile, setSelectedTile] = useState('b2')
 
   const completed = useMemo(
     () => ({
       recognition: recognitionIndex >= recognitionQuestions.length,
+      puzzle: puzzleIndex >= puzzleQuestions.length,
     }),
-    [recognitionIndex]
+    [recognitionIndex, puzzleIndex]
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
-  const progress = (completedCount / 1) * 100
+  const progress = (completedCount / 2) * 100
 
   function nextRecognition() {
     if (recognitionIndex < recognitionQuestions.length - 1) {
@@ -28,6 +36,16 @@ export default function App() {
     } else {
       setRecognitionIndex(recognitionQuestions.length)
       setRecognitionSelected(null)
+    }
+  }
+
+  function nextPuzzle() {
+    if (puzzleIndex < puzzleQuestions.length - 1) {
+      setPuzzleIndex(puzzleIndex + 1)
+      setPuzzleSelected(null)
+    } else {
+      setPuzzleIndex(puzzleQuestions.length)
+      setPuzzleSelected(null)
     }
   }
 
@@ -40,16 +58,16 @@ export default function App() {
               <div className="muted tiny">Vite + React prototype</div>
               <h1>Mahjong Beginner Trainer</h1>
               <p className="muted small" style={{ marginTop: 8, maxWidth: 720 }}>
-                A browser-based trainer for absolute beginners learning Hong Kong style Mahjong,
-                with optional Cantonese tile names and table phrases.
+                A browser-based trainer for absolute beginners learning Hong Kong
+                style Mahjong, with optional Cantonese tile names and table phrases.
               </p>
             </div>
-            <span className="badge">React v3</span>
+            <span className="badge">React v4</span>
           </div>
 
           <div className="row" style={{ marginTop: 14 }}>
             <div className="small muted">
-              Progress: {completedCount} / 1 module complete
+              Progress: {completedCount} / 2 core modules complete
             </div>
             <button
               className="secondary"
@@ -87,13 +105,20 @@ export default function App() {
 
       <div className="main-grid" style={{ marginTop: 16 }}>
         <div>
-          <div className="tabs">
+          <div className="tabs four-tabs">
             <button
               className={`tab ${activeTab === 'recognition' ? 'active' : ''}`}
               onClick={() => setActiveTab('recognition')}
               type="button"
             >
               Recognition
+            </button>
+            <button
+              className={`tab ${activeTab === 'puzzle' ? 'active' : ''}`}
+              onClick={() => setActiveTab('puzzle')}
+              type="button"
+            >
+              14-Tile
             </button>
             <button
               className={`tab ${activeTab === 'vocabulary' ? 'active' : ''}`}
@@ -121,6 +146,16 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'puzzle' && (
+            <PuzzleModule
+              showChinese={showChinese}
+              puzzleIndex={puzzleIndex}
+              puzzleSelected={puzzleSelected}
+              setPuzzleSelected={setPuzzleSelected}
+              nextPuzzle={nextPuzzle}
+            />
+          )}
+
           {activeTab === 'vocabulary' && (
             <VocabularyModule
               showChinese={showChinese}
@@ -129,23 +164,23 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'phrases' && (
-            <PhraseModule showChinese={showChinese} />
-          )}
+          {activeTab === 'phrases' && <PhraseModule showChinese={showChinese} />}
         </div>
 
         <div className="stack">
           <div className="card">
             <h2>Why this version matters</h2>
             <div className="small muted" style={{ marginTop: 10 }}>
-              App-level layout and state are now separated from module-level rendering.
+              The app now has more than one real training module, so the
+              structure is starting to behave like a real curriculum.
             </div>
           </div>
 
           <div className="card">
             <h2>Next milestones</h2>
             <div className="small muted" style={{ marginTop: 10 }}>
-              Add a 14-tile puzzle module, a tenpai trainer, and then move shared header content into reusable layout components.
+              Add a discard trainer, then a tenpai trainer, and then consider
+              moving progress tracking into a dedicated custom hook.
             </div>
           </div>
         </div>
