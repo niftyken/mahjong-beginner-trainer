@@ -1,4 +1,4 @@
-export const puzzleQuestions = [
+export const handQuestions = [
     {
       hand: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'c2', 'c3', 'c4', 'red', 'red', 'red', 'east', 'east'],
       isWinning: true,

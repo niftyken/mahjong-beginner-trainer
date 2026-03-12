@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react'
 import { recognitionQuestions } from './data/recognitionQuestions'
-import { puzzleQuestions } from './data/puzzleQuestions'
+import { handQuestions } from './data/handQuestions'
 import { discardQuestions } from './data/discardQuestions'
 import { tenpaiQuestions } from './data/tenpaiQuestions'
 import RecognitionModule from './modules/RecognitionModule'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
-import PuzzleModule from './modules/PuzzleModule'
+import HandModule from './modules/HandModule'
 import DiscardModule from './modules/DiscardModule'
 import TenpaiModule from './modules/TenpaiModule'
 
@@ -17,8 +17,8 @@ export default function App() {
   const [recognitionIndex, setRecognitionIndex] = useState(0)
   const [recognitionSelected, setRecognitionSelected] = useState(null)
 
-  const [puzzleIndex, setPuzzleIndex] = useState(0)
-  const [puzzleSelected, setPuzzleSelected] = useState(null)
+  const [handIndex, setHandIndex] = useState(0)
+  const [handSelected, setHandSelected] = useState(null)
 
   const [discardIndex, setDiscardIndex] = useState(0)
   const [discardSelected, setDiscardSelected] = useState(null)
@@ -31,11 +31,11 @@ export default function App() {
   const completed = useMemo(
     () => ({
       recognition: recognitionIndex >= recognitionQuestions.length,
-      puzzle: puzzleIndex >= puzzleQuestions.length,
+      hand: handIndex >= handQuestions.length,
       discard: discardIndex >= discardQuestions.length,
       tenpai: tenpaiIndex >= tenpaiQuestions.length,
     }),
-    [recognitionIndex, puzzleIndex, discardIndex, tenpaiIndex]
+    [recognitionIndex, handIndex, discardIndex, tenpaiIndex]
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
@@ -51,13 +51,13 @@ export default function App() {
     }
   }
 
-  function nextPuzzle() {
-    if (puzzleIndex < puzzleQuestions.length - 1) {
-      setPuzzleIndex(puzzleIndex + 1)
-      setPuzzleSelected(null)
+  function nextHand() {
+    if (handIndex < handQuestions.length - 1) {
+      setHandIndex(handIndex + 1)
+      setHandSelected(null)
     } else {
-      setPuzzleIndex(puzzleQuestions.length)
-      setPuzzleSelected(null)
+      setHandIndex(handQuestions.length)
+      setHandSelected(null)
     }
   }
 
@@ -146,8 +146,8 @@ export default function App() {
               Recognition
             </button>
             <button
-              className={`tab ${activeTab === 'puzzle' ? 'active' : ''}`}
-              onClick={() => setActiveTab('puzzle')}
+              className={`tab ${activeTab === 'hand' ? 'active' : ''}`}
+              onClick={() => setActiveTab('hand')}
               type="button"
             >
               14-Tile
@@ -192,13 +192,13 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'puzzle' && (
-            <PuzzleModule
+          {activeTab === 'hand' && (
+            <HandModule
               showChinese={showChinese}
-              puzzleIndex={puzzleIndex}
-              puzzleSelected={puzzleSelected}
-              setPuzzleSelected={setPuzzleSelected}
-              nextPuzzle={nextPuzzle}
+              handIndex={handIndex}
+              handSelected={handSelected}
+              setHandSelected={setHandSelected}
+              nextHand={nextHand}
             />
           )}
 

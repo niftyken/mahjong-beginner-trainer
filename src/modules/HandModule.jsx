@@ -1,29 +1,29 @@
 import Tile from '../components/Tile'
 import Feedback from '../components/Feedback'
-import { puzzleQuestions } from '../data/puzzleQuestions'
+import { handQuestions } from '../data/handQuestions'
 
-export default function PuzzleModule({
+export default function HandModule({
   showChinese,
-  puzzleIndex,
-  puzzleSelected,
-  setPuzzleSelected,
-  nextPuzzle,
+  handIndex,
+  handSelected,
+  sethandSelected,
+  nexthand,
 }) {
-  const q = puzzleQuestions[Math.min(puzzleIndex, puzzleQuestions.length - 1)]
-  const puzzleAnswered = puzzleSelected !== null
-  const puzzleCorrect = puzzleSelected === q.isWinning
+  const q = handQuestions[Math.min(handIndex, handQuestions.length - 1)]
+  const handAnswered = handSelected !== null
+  const handCorrect = handSelected === q.isWinning
 
   return (
     <div className="card stack">
       <div>
-        <h2>Module 2: 14-Tile Puzzle Drill</h2>
+        <h2>Module 2: 14-Tile Hand Drill</h2>
         <p className="muted small">
           Decide whether a full 14-tile hand is complete. This trains the core
           beginner skill of recognizing four groups plus one pair.
         </p>
       </div>
 
-      {puzzleIndex < puzzleQuestions.length ? (
+      {handIndex < handQuestions.length ? (
         <>
           <div className="hand-grid">
             {q.hand.map((code, index) => (
@@ -38,34 +38,34 @@ export default function PuzzleModule({
           <div className="options">
             <button
               className="secondary"
-              disabled={puzzleAnswered}
-              onClick={() => setPuzzleSelected(true)}
+              disabled={handAnswered}
+              onClick={() => sethandSelected(true)}
               type="button"
             >
               Winning Hand
             </button>
             <button
               className="secondary"
-              disabled={puzzleAnswered}
-              onClick={() => setPuzzleSelected(false)}
+              disabled={handAnswered}
+              onClick={() => setHandSelected(false)}
               type="button"
             >
               Not Winning Yet
             </button>
           </div>
 
-          {puzzleAnswered && (
+          {handAnswered && (
             <Feedback
-              correct={puzzleCorrect}
-              text={puzzleCorrect ? q.correct : q.wrong}
+              correct={handCorrect}
+              text={handCorrect ? q.correct : q.wrong}
               hint={q.hint}
             />
           )}
 
-          {puzzleAnswered && (
-            <button onClick={nextPuzzle} type="button">
-              {puzzleIndex < puzzleQuestions.length - 1
-                ? 'Next Puzzle'
+          {handAnswered && (
+            <button onClick={nextHand} type="button">
+              {handIndex < handQuestions.length - 1
+                ? 'Next hand'
                 : 'Finish Module'}
             </button>
           )}
