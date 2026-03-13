@@ -79,9 +79,6 @@ export default function RecognitionModule({
       {lastEvaluation ? (
         <div>
           <div>{lastEvaluation.isCorrect ? "Correct" : "Incorrect"}</div>
-          {lastEvaluation.feedback?.message ? (
-            <div>{lastEvaluation.feedback.message}</div>
-          ) : null}
           {lastEvaluation.feedback?.explanation ? (
             <div>{lastEvaluation.feedback.explanation}</div>
           ) : null}

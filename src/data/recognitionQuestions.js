@@ -11,9 +11,9 @@ export const recognitionQuestions = [
     correctAnswer: "1 Bamboo, 一索 (jat1 sok3)",
     hint: "Look at the suit pattern. Bamboo tiles belong to the 索 suit.",
     correctExplanation:
-      "Correct. This is 1 Bamboo, 一索 (jat1 sok3). The word 索 (sok3) indicates the Bamboo suit.",
+      "This is 1 Bamboo, 一索 (jat1 sok3). The word 索 (sok3) indicates the Bamboo suit.",
     wrongExplanation:
-      "Not quite. This tile is 1 Bamboo, 一索 (jat1 sok3). The suit marker shows it belongs to the Bamboo suit, not Characters, Dots, or an honor tile."
+      "This tile is 1 Bamboo, 一索 (jat1 sok3). The suit marker shows it belongs to the Bamboo suit, not Characters, Dots, or an honor tile."
   },
   {
     id: "recognition-002",
@@ -27,9 +27,9 @@ export const recognitionQuestions = [
     correctAnswer: "3 Bamboo, 三索 (saam1 sok3)",
     hint: "Focus on both the number and the suit. Bamboo tiles use the 索 label.",
     correctExplanation:
-      "Correct. This is 3 Bamboo, 三索 (saam1 sok3). The word 索 (sok3) indicates the Bamboo suit.",
+      "This is 3 Bamboo, 三索 (saam1 sok3). The word 索 (sok3) indicates the Bamboo suit.",
     wrongExplanation:
-      "Not quite. This tile is 3 Bamboo, 三索 (saam1 sok3). The suit is Bamboo, so it is not Characters, Dots, or a dragon."
+      "This tile is 3 Bamboo, 三索 (saam1 sok3). The suit is Bamboo, so it is not Characters, Dots, or a dragon."
   },
   {
     id: "recognition-003",
@@ -43,9 +43,9 @@ export const recognitionQuestions = [
     correctAnswer: "5 Bamboo, 五索 (ng5 sok3)",
     hint: "Observe the tile structure carefully. First identify the number, then the suit.",
     correctExplanation:
-      "Correct. This is 5 Bamboo, 五索 (ng5 sok3). The number is 5, and 索 (sok3) marks the Bamboo suit.",
+      "This is 5 Bamboo, 五索 (ng5 sok3). The number is 5, and 索 (sok3) marks the Bamboo suit.",
     wrongExplanation:
-      "Not quite. This tile is 5 Bamboo, 五索 (ng5 sok3). The 索 character helps you identify it as Bamboo."
+      "This tile is 5 Bamboo, 五索 (ng5 sok3). The 索 character helps you identify it as Bamboo."
   },
   {
     id: "recognition-004",
@@ -59,9 +59,9 @@ export const recognitionQuestions = [
     correctAnswer: "7 Bamboo, 七索 (cat1 sok3)",
     hint: "For suited tiles, look for the number first and then the suit label.",
     correctExplanation:
-      "Correct. This is 7 Bamboo, 七索 (cat1 sok3). The word 索 (sok3) tells you it is in the Bamboo suit.",
+      "This is 7 Bamboo, 七索 (cat1 sok3). The word 索 (sok3) tells you it is in the Bamboo suit.",
     wrongExplanation:
-      "Not quite. This tile is 7 Bamboo, 七索 (cat1 sok3). It is a numbered Bamboo tile, not a Character, Dot, or dragon tile."
+      "This tile is 7 Bamboo, 七索 (cat1 sok3). It is a numbered Bamboo tile, not a Character, Dot, or dragon tile."
   },
   {
     id: "recognition-005",
@@ -75,9 +75,9 @@ export const recognitionQuestions = [
     correctAnswer: "2 Characters, 二萬 (ji6 maan6)",
     hint: "Character suit tiles use the 萬 label. Watch for the difference from Bamboo and Dots.",
     correctExplanation:
-      "Correct. This is 2 Characters, 二萬 (ji6 maan6). The word 萬 (maan6) indicates the Characters suit.",
+      "This is 2 Characters, 二萬 (ji6 maan6). The word 萬 (maan6) indicates the Characters suit.",
     wrongExplanation:
-      "Not quite. This tile is 2 Characters, 二萬 (ji6 maan6). The 萬 character marks the Characters suit."
+      "This tile is 2 Characters, 二萬 (ji6 maan6). The 萬 character marks the Characters suit."
   },
   {
     id: "recognition-006",
@@ -91,9 +91,9 @@ export const recognitionQuestions = [
     correctAnswer: "4 Characters, 四萬 (sei3 maan6)",
     hint: "Look for the Chinese character 萬, which identifies the Characters suit.",
     correctExplanation:
-      "Correct. This is 4 Characters, 四萬 (sei3 maan6). The word 萬 (maan6) indicates the Characters suit.",
+      "This is 4 Characters, 四萬 (sei3 maan6). The word 萬 (maan6) indicates the Characters suit.",
     wrongExplanation:
-      "Not quite. This tile is 4 Characters, 四萬 (sei3 maan6). The 萬 marker tells you it belongs to the Characters suit."
+      "This tile is 4 Characters, 四萬 (sei3 maan6). The 萬 marker tells you it belongs to the Characters suit."
   },
   {
     id: "recognition-007",
@@ -107,9 +107,9 @@ export const recognitionQuestions = [
     correctAnswer: "6 Characters, 六萬 (luk6 maan6)",
     hint: "This is a suited tile, not an honor tile. Check the number and the 萬 suit marker.",
     correctExplanation:
-      "Correct. This is 6 Characters, 六萬 (luk6 maan6). The word 萬 (maan6) indicates the Characters suit.",
+      "This is 6 Characters, 六萬 (luk6 maan6). The word 萬 (maan6) indicates the Characters suit.",
     wrongExplanation:
-      "Not quite. This tile is 6 Characters, 六萬 (luk6 maan6). It is in the Characters suit because of the 萬 label."
+      "This tile is 6 Characters, 六萬 (luk6 maan6). It is in the Characters suit because of the 萬 label."
   },
   {
     id: "recognition-008",
@@ -123,9 +123,9 @@ export const recognitionQuestions = [
     correctAnswer: "9 Characters, 九萬 (gau2 maan6)",
     hint: "Find the number, then confirm the suit. Characters tiles use 萬.",
     correctExplanation:
-      "Correct. This is 9 Characters, 九萬 (gau2 maan6). The word 萬 (maan6) indicates the Characters suit.",
+      "This is 9 Characters, 九萬 (gau2 maan6). The word 萬 (maan6) indicates the Characters suit.",
     wrongExplanation:
-      "Not quite. This tile is 9 Characters, 九萬 (gau2 maan6). The 萬 character shows that it is a Character tile."
+      "This tile is 9 Characters, 九萬 (gau2 maan6). The 萬 character shows that it is a Character tile."
   },
   {
     id: "recognition-009",
@@ -139,9 +139,9 @@ export const recognitionQuestions = [
     correctAnswer: "1 Dots, 一筒 (jat1 tung4)",
     hint: "Dots tiles are circular and belong to the 筒 suit.",
     correctExplanation:
-      "Correct. This is 1 Dots, 一筒 (jat1 tung4). The word 筒 (tung4) indicates the Dots suit.",
+      "This is 1 Dots, 一筒 (jat1 tung4). The word 筒 (tung4) indicates the Dots suit.",
     wrongExplanation:
-      "Not quite. This tile is 1 Dots, 一筒 (jat1 tung4). The 筒 character marks the Dots suit."
+      "This tile is 1 Dots, 一筒 (jat1 tung4). The 筒 character marks the Dots suit."
   },
   {
     id: "recognition-010",
@@ -155,9 +155,9 @@ export const recognitionQuestions = [
     correctAnswer: "3 Dots, 三筒 (saam1 tung4)",
     hint: "Look for the circular dot pattern and the 筒 suit name.",
     correctExplanation:
-      "Correct. This is 3 Dots, 三筒 (saam1 tung4). The word 筒 (tung4) indicates the Dots suit.",
+      "This is 3 Dots, 三筒 (saam1 tung4). The word 筒 (tung4) indicates the Dots suit.",
     wrongExplanation:
-      "Not quite. This tile is 3 Dots, 三筒 (saam1 tung4). The dot pattern and 筒 label identify the Dots suit."
+      "This tile is 3 Dots, 三筒 (saam1 tung4). The dot pattern and 筒 label identify the Dots suit."
   },
   {
     id: "recognition-011",
@@ -171,9 +171,9 @@ export const recognitionQuestions = [
     correctAnswer: "6 Dots, 六筒 (luk6 tung4)",
     hint: "Dots tiles use circular symbols. Confirm the number and the 筒 suit label.",
     correctExplanation:
-      "Correct. This is 6 Dots, 六筒 (luk6 tung4). The word 筒 (tung4) indicates the Dots suit.",
+      "This is 6 Dots, 六筒 (luk6 tung4). The word 筒 (tung4) indicates the Dots suit.",
     wrongExplanation:
-      "Not quite. This tile is 6 Dots, 六筒 (luk6 tung4). The circular pattern helps distinguish Dots from Bamboo and Characters."
+      "This tile is 6 Dots, 六筒 (luk6 tung4). The circular pattern helps distinguish Dots from Bamboo and Characters."
   },
   {
     id: "recognition-012",
@@ -187,9 +187,9 @@ export const recognitionQuestions = [
     correctAnswer: "8 Dots, 八筒 (baat3 tung4)",
     hint: "Try to separate the number from the suit. The dots show that this is in the 筒 suit.",
     correctExplanation:
-      "Correct. This is 8 Dots, 八筒 (baat3 tung4). The word 筒 (tung4) indicates the Dots suit.",
+      "This is 8 Dots, 八筒 (baat3 tung4). The word 筒 (tung4) indicates the Dots suit.",
     wrongExplanation:
-      "Not quite. This tile is 8 Dots, 八筒 (baat3 tung4). The dot pattern marks it as a Dots tile."
+      "This tile is 8 Dots, 八筒 (baat3 tung4). The dot pattern marks it as a Dots tile."
   },
   {
     id: "recognition-013",
@@ -203,9 +203,9 @@ export const recognitionQuestions = [
     correctAnswer: "East Wind, 東 (dung1)",
     hint: "Wind tiles are honors, not numbered suit tiles. Read the direction character.",
     correctExplanation:
-      "Correct. This is East Wind, 東 (dung1). Wind tiles are honor tiles, so they do not belong to Bamboo, Characters, or Dots.",
+      "This is East Wind, 東 (dung1). Wind tiles are honor tiles, so they do not belong to Bamboo, Characters, or Dots.",
     wrongExplanation:
-      "Not quite. This tile is East Wind, 東 (dung1). Wind tiles are honor tiles identified by direction characters."
+      "This tile is East Wind, 東 (dung1). Wind tiles are honor tiles identified by direction characters."
   },
   {
     id: "recognition-014",
@@ -219,9 +219,9 @@ export const recognitionQuestions = [
     correctAnswer: "South Wind, 南 (naam4)",
     hint: "This is an honor tile. Focus on the direction character rather than a suit pattern.",
     correctExplanation:
-      "Correct. This is South Wind, 南 (naam4). Winds are honor tiles and are identified by their direction characters.",
+      "This is South Wind, 南 (naam4). Winds are honor tiles and are identified by their direction characters.",
     wrongExplanation:
-      "Not quite. This tile is South Wind, 南 (naam4). Unlike suited tiles, wind tiles use direction characters."
+      "This tile is South Wind, 南 (naam4). Unlike suited tiles, wind tiles use direction characters."
   },
   {
     id: "recognition-015",
@@ -235,9 +235,9 @@ export const recognitionQuestions = [
     correctAnswer: "West Wind, 西 (sai1)",
     hint: "Honor tiles do not have numbers. Look for the character for the direction.",
     correctExplanation:
-      "Correct. This is West Wind, 西 (sai1). Winds are honor tiles, so the main clue is the direction character.",
+      "This is West Wind, 西 (sai1). Winds are honor tiles, so the main clue is the direction character.",
     wrongExplanation:
-      "Not quite. This tile is West Wind, 西 (sai1). It is a wind honor tile, not a numbered suit tile."
+      "This tile is West Wind, 西 (sai1). It is a wind honor tile, not a numbered suit tile."
   },
   {
     id: "recognition-016",
@@ -251,9 +251,9 @@ export const recognitionQuestions = [
     correctAnswer: "North Wind, 北 (bak1)",
     hint: "This tile is a wind honor. Check which direction character is shown.",
     correctExplanation:
-      "Correct. This is North Wind, 北 (bak1). Winds are honor tiles and are recognized by direction characters.",
+      "This is North Wind, 北 (bak1). Winds are honor tiles and are recognized by direction characters.",
     wrongExplanation:
-      "Not quite. This tile is North Wind, 北 (bak1). The character identifies the direction, which tells you which wind it is."
+      "This tile is North Wind, 北 (bak1). The character identifies the direction, which tells you which wind it is."
   },
   {
     id: "recognition-017",
@@ -267,9 +267,9 @@ export const recognitionQuestions = [
     correctAnswer: "Red Dragon, 中 (zung1)",
     hint: "Dragon tiles are honors. They are not numbered and do not belong to a suit.",
     correctExplanation:
-      "Correct. This is Red Dragon, 中 (zung1). Dragon tiles are honor tiles, and 中 (zung1) is the red dragon.",
+      "This is Red Dragon, 中 (zung1). Dragon tiles are honor tiles, and 中 (zung1) is the red dragon.",
     wrongExplanation:
-      "Not quite. This tile is Red Dragon, 中 (zung1). Dragons are honor tiles and are separate from the wind tiles."
+      "This tile is Red Dragon, 中 (zung1). Dragons are honor tiles and are separate from the wind tiles."
   },
   {
     id: "recognition-018",
@@ -283,9 +283,9 @@ export const recognitionQuestions = [
     correctAnswer: "Green Dragon, 發 (faat3)",
     hint: "This is a dragon honor tile. Focus on the distinctive character used for the dragon.",
     correctExplanation:
-      "Correct. This is Green Dragon, 發 (faat3). Dragon tiles are honors, and 發 (faat3) is the green dragon.",
+      "This is Green Dragon, 發 (faat3). Dragon tiles are honors, and 發 (faat3) is the green dragon.",
     wrongExplanation:
-      "Not quite. This tile is Green Dragon, 發 (faat3). It is a dragon honor tile, not a wind or suited tile."
+      "This tile is Green Dragon, 發 (faat3). It is a dragon honor tile, not a wind or suited tile."
   },
   {
     id: "recognition-019",
@@ -299,9 +299,9 @@ export const recognitionQuestions = [
     correctAnswer: "White Dragon, 白 (baak6)",
     hint: "White Dragon is an honor tile. It does not show a suit or a number.",
     correctExplanation:
-      "Correct. This is White Dragon, 白 (baak6). Dragon tiles are honor tiles, and 白 (baak6) is the white dragon.",
+      "This is White Dragon, 白 (baak6). Dragon tiles are honor tiles, and 白 (baak6) is the white dragon.",
     wrongExplanation:
-      "Not quite. This tile is White Dragon, 白 (baak6). It is a dragon honor tile rather than a numbered suit tile."
+      "This tile is White Dragon, 白 (baak6). It is a dragon honor tile rather than a numbered suit tile."
   },
   {
     id: "recognition-020",
@@ -315,9 +315,9 @@ export const recognitionQuestions = [
     correctAnswer: "9 Bamboo, 九索 (gau2 sok3)",
     hint: "The number is 9. Then check whether the suit marker is Bamboo, Characters, or Dots.",
     correctExplanation:
-      "Correct. This is 9 Bamboo, 九索 (gau2 sok3). The word 索 (sok3) indicates the Bamboo suit.",
+      "This is 9 Bamboo, 九索 (gau2 sok3). The word 索 (sok3) indicates the Bamboo suit.",
     wrongExplanation:
-      "Not quite. This tile is 9 Bamboo, 九索 (gau2 sok3). The 索 marker shows it belongs to the Bamboo suit."
+      "This tile is 9 Bamboo, 九索 (gau2 sok3). The 索 marker shows it belongs to the Bamboo suit."
   },
   {
     id: "recognition-021",
@@ -331,9 +331,9 @@ export const recognitionQuestions = [
     correctAnswer: "7 Characters, 七萬 (cat1 maan6)",
     hint: "Look for the 萬 character to identify the Characters suit.",
     correctExplanation:
-      "Correct. This is 7 Characters, 七萬 (cat1 maan6). The word 萬 (maan6) indicates the Characters suit.",
+      "This is 7 Characters, 七萬 (cat1 maan6). The word 萬 (maan6) indicates the Characters suit.",
     wrongExplanation:
-      "Not quite. This tile is 7 Characters, 七萬 (cat1 maan6). The 萬 character is the key clue for the Characters suit."
+      "This tile is 7 Characters, 七萬 (cat1 maan6). The 萬 character is the key clue for the Characters suit."
   },
   {
     id: "recognition-022",
@@ -347,9 +347,9 @@ export const recognitionQuestions = [
     correctAnswer: "4 Dots, 四筒 (sei3 tung4)",
     hint: "Circular symbols usually indicate the Dots suit.",
     correctExplanation:
-      "Correct. This is 4 Dots, 四筒 (sei3 tung4). The word 筒 (tung4) indicates the Dots suit.",
+      "This is 4 Dots, 四筒 (sei3 tung4). The word 筒 (tung4) indicates the Dots suit.",
     wrongExplanation:
-      "Not quite. This tile is 4 Dots, 四筒 (sei3 tung4). The circular dot structure helps identify the Dots suit."
+      "This tile is 4 Dots, 四筒 (sei3 tung4). The circular dot structure helps identify the Dots suit."
   },
   {
     id: "recognition-023",
@@ -363,9 +363,9 @@ export const recognitionQuestions = [
     correctAnswer: "8 Bamboo, 八索 (baat3 sok3)",
     hint: "Find the number first, then confirm the suit using the suit marker.",
     correctExplanation:
-      "Correct. This is 8 Bamboo, 八索 (baat3 sok3). The word 索 (sok3) indicates the Bamboo suit.",
+      "This is 8 Bamboo, 八索 (baat3 sok3). The word 索 (sok3) indicates the Bamboo suit.",
     wrongExplanation:
-      "Not quite. This tile is 8 Bamboo, 八索 (baat3 sok3). The 索 character marks the Bamboo suit."
+      "This tile is 8 Bamboo, 八索 (baat3 sok3). The 索 character marks the Bamboo suit."
   },
   {
     id: "recognition-024",
@@ -379,8 +379,8 @@ export const recognitionQuestions = [
     correctAnswer: "1 Characters, 一萬 (jat1 maan6)",
     hint: "This is a suited tile. Look for the number and the 萬 suit marker.",
     correctExplanation:
-      "Correct. This is 1 Characters, 一萬 (jat1 maan6). The word 萬 (maan6) indicates the Characters suit.",
+      "This is 1 Characters, 一萬 (jat1 maan6). The word 萬 (maan6) indicates the Characters suit.",
     wrongExplanation:
-      "Not quite. This tile is 1 Characters, 一萬 (jat1 maan6). The 萬 character shows it belongs to the Characters suit."
+      "This tile is 1 Characters, 一萬 (jat1 maan6). The 萬 character shows it belongs to the Characters suit."
   }
 ];

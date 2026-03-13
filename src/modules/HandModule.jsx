@@ -1,83 +1,107 @@
-import Tile from '../components/Tile'
-import Feedback from '../components/Feedback'
-import { handQuestions } from '../data/handQuestions'
+import React from "react";
+import Tile from "../components/Tile.jsx";
 
 export default function HandModule({
-  showChinese,
-  handIndex,
-  handSelected,
-  sethandSelected,
-  nexthand,
+  moduleConfig,
+  currentQuestion,
+  currentIndex,
+  totalQuestions,
+  score,
+  streak,
+  lastEvaluation,
+  submitAnswer,
+  goNext,
+  restart,
 }) {
-  const q = handQuestions[Math.min(handIndex, handQuestions.length - 1)]
-  const handAnswered = handSelected !== null
-  const handCorrect = handSelected === q.isWinning
+  const hasMoreQuestions = currentIndex < totalQuestions - 1;
+
+  if (!currentQuestion) {
+    return (
+      <div>
+        <h2>{moduleConfig?.title || "Hand Trainer"}</h2>
+        <div>No questions available.</div>
+
+        <div>
+          <div>
+            Question: {totalQuestions > 0 ? currentIndex + 1 : 0} of {totalQuestions}
+          </div>
+          <div>Correct: {score.correct}</div>
+          <div>Incorrect: {score.incorrect}</div>
+          <div>Points: {score.points}</div>
+          <div>Current Streak: {streak.current}</div>
+          <div>Best Streak: {streak.best}</div>
+        </div>
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="card stack">
+    <div>
+      <h2>{moduleConfig?.title || "Hand Trainer"}</h2>
+      {moduleConfig?.description ? <p>{moduleConfig.description}</p> : null}
+
       <div>
-        <h2>Module 2: 14-Tile Hand Drill</h2>
-        <p className="muted small">
-          Decide whether a full 14-tile hand is complete. This trains the core
-          beginner skill of recognizing four groups plus one pair.
-        </p>
+        <div>
+          Question: {currentIndex + 1} of {totalQuestions}
+        </div>
+        <div>Correct: {score.correct}</div>
+        <div>Incorrect: {score.incorrect}</div>
+        <div>Points: {score.points}</div>
+        <div>Current Streak: {streak.current}</div>
+        <div>Best Streak: {streak.best}</div>
       </div>
 
-      {handIndex < handQuestions.length ? (
-        <>
-          <div className="hand-grid">
-            {q.hand.map((code, index) => (
-              <Tile
-                key={`${code}-${index}`}
-                code={code}
-                showChinese={showChinese}
-              />
-            ))}
-          </div>
-
-          <div className="options">
-            <button
-              className="secondary"
-              disabled={handAnswered}
-              onClick={() => sethandSelected(true)}
-              type="button"
-            >
-              Winning Hand
-            </button>
-            <button
-              className="secondary"
-              disabled={handAnswered}
-              onClick={() => setHandSelected(false)}
-              type="button"
-            >
-              Not Winning Yet
-            </button>
-          </div>
-
-          {handAnswered && (
-            <Feedback
-              correct={handCorrect}
-              text={handCorrect ? q.correct : q.wrong}
-              hint={q.hint}
-            />
-          )}
-
-          {handAnswered && (
-            <button onClick={nextHand} type="button">
-              {handIndex < handQuestions.length - 1
-                ? 'Next hand'
-                : 'Finish Module'}
-            </button>
-          )}
-        </>
-      ) : (
-        <div className="feedback good">
-          <strong>Module complete.</strong>
-          <div className="small" style={{ marginTop: 6 }}>
-            Nice. You are starting to read complete Mahjong hand shapes.
-          </div>
+      <div>
+        <div>{currentQuestion.prompt || "Is this a winning hand?"}</div>
+        <div>
+          {Array.isArray(currentQuestion.hand)
+            ? currentQuestion.hand.map((code, index) => (
+                <Tile key={`${code}-${index}`} code={code} />
+              ))
+            : null}
         </div>
-      )}
+        {currentQuestion.hint ? <div>Hint: {currentQuestion.hint}</div> : null}
+      </div>
+
+      <div>
+        {Array.isArray(currentQuestion.choices)
+          ? currentQuestion.choices.map((choice) => (
+              <button
+                key={choice}
+                type="button"
+                onClick={() => submitAnswer(choice)}
+                disabled={Boolean(lastEvaluation)}
+              >
+                {choice}
+              </button>
+            ))
+          : null}
+      </div>
+
+      {lastEvaluation ? (
+        <div>
+          <div>{lastEvaluation.isCorrect ? "Correct" : "Incorrect"}</div>
+          {lastEvaluation.feedback?.explanation ? (
+            <div>{lastEvaluation.feedback.explanation}</div>
+          ) : null}
+        </div>
+      ) : null}
+
+      <div>
+        {lastEvaluation && hasMoreQuestions ? (
+          <button type="button" onClick={goNext}>
+            Next
+          </button>
+        ) : null}
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
     </div>
-  )
+  );
 }

@@ -1,20 +1,15 @@
 import { useMemo, useState } from 'react'
-import { handQuestions } from './data/handQuestions'
 import { discardQuestions } from './data/discardQuestions'
 import { tenpaiQuestions } from './data/tenpaiQuestions'
 import TrainerShell from './components/TrainerShell'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
-import HandModule from './modules/HandModule'
 import DiscardModule from './modules/DiscardModule'
 import TenpaiModule from './modules/TenpaiModule'
 
 export default function App() {
   const [showChinese, setShowChinese] = useState(true)
   const [activeTab, setActiveTab] = useState('recognition')
-
-  const [handIndex, setHandIndex] = useState(0)
-  const [handSelected, setHandSelected] = useState(null)
 
   const [discardIndex, setDiscardIndex] = useState(0)
   const [discardSelected, setDiscardSelected] = useState(null)
@@ -26,25 +21,14 @@ export default function App() {
 
   const completed = useMemo(
     () => ({
-      hand: handIndex >= handQuestions.length,
       discard: discardIndex >= discardQuestions.length,
       tenpai: tenpaiIndex >= tenpaiQuestions.length,
     }),
-    [handIndex, discardIndex, tenpaiIndex]
+    [discardIndex, tenpaiIndex]
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
-  const progress = (completedCount / 3) * 100
-
-  function nextHand() {
-    if (handIndex < handQuestions.length - 1) {
-      setHandIndex(handIndex + 1)
-      setHandSelected(null)
-    } else {
-      setHandIndex(handQuestions.length)
-      setHandSelected(null)
-    }
-  }
+  const progress = (completedCount / 2) * 100
 
   function nextDiscard() {
     if (discardIndex < discardQuestions.length - 1) {
@@ -84,7 +68,7 @@ export default function App() {
 
           <div className="row" style={{ marginTop: 14 }}>
             <div className="small muted">
-              Progress: {completedCount} / 3 core modules complete
+              Progress: {completedCount} / 2 tracked core modules complete
             </div>
             <button
               className="secondary"
@@ -172,13 +156,7 @@ export default function App() {
           )}
 
           {activeTab === 'hand' && (
-            <HandModule
-              showChinese={showChinese}
-              handIndex={handIndex}
-              handSelected={handSelected}
-              setHandSelected={setHandSelected}
-              nextHand={nextHand}
-            />
+            <TrainerShell trainerId="HandTrainer" />
           )}
 
           {activeTab === 'discard' && (
