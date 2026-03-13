@@ -1,80 +1,105 @@
-import Tile from '../components/Tile'
-import Feedback from '../components/Feedback'
-import PronounceButton from '../components/PronounceButton'
-import { tiles } from '../data/tiles'
-import { recognitionQuestions } from '../data/recognitionQuestions'
+import React from "react";
+import Tile from "../components/Tile.jsx";
+import FullTile from "../components/FullTile.jsx";
 
 export default function RecognitionModule({
-  showChinese,
-  recognitionIndex,
-  recognitionSelected,
-  setRecognitionSelected,
-  nextRecognition,
+  moduleConfig,
+  currentQuestion,
+  currentIndex,
+  totalQuestions,
+  score,
+  streak,
+  lastEvaluation,
+  submitAnswer,
+  goNext,
+  restart,
 }) {
-  const q = recognitionQuestions[Math.min(recognitionIndex, recognitionQuestions.length - 1)]
-  const recognitionAnswered = recognitionSelected !== null
-  const recognitionCorrect = recognitionSelected === q.answer
+  const hasMoreQuestions = currentIndex < totalQuestions - 1;
+
+  if (!currentQuestion) {
+    return (
+      <div>
+        <h2>{moduleConfig?.title || "Recognition Trainer"}</h2>
+        <div>No questions available.</div>
+
+        <div>
+          <div>
+            Question: {totalQuestions > 0 ? currentIndex + 1 : 0} of {totalQuestions}
+          </div>
+          <div>Correct: {score.correct}</div>
+          <div>Incorrect: {score.incorrect}</div>
+          <div>Points: {score.points}</div>
+          <div>Current Streak: {streak.current}</div>
+          <div>Best Streak: {streak.best}</div>
+        </div>
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="card stack">
+    <div>
+      <h2>{moduleConfig?.title || "Recognition Trainer"}</h2>
+      {moduleConfig?.description ? <p>{moduleConfig.description}</p> : null}
+
       <div>
-        <h2>Module 1: Tile Recognition</h2>
-        <p className="muted small">
-          Learn to identify tiles by sight and connect them to useful Cantonese terms.
-        </p>
+        <div>
+          Question: {currentIndex + 1} of {totalQuestions}
+        </div>
+        <div>Correct: {score.correct}</div>
+        <div>Incorrect: {score.incorrect}</div>
+        <div>Points: {score.points}</div>
+        <div>Current Streak: {streak.current}</div>
+        <div>Best Streak: {streak.best}</div>
       </div>
 
-      {recognitionIndex < recognitionQuestions.length ? (
-        <>
-          <div className="center">
-            <Tile code={q.tile} large showChinese={showChinese} />
-          </div>
+      <div>
+        <Tile code={currentQuestion.tile} />
+        {currentQuestion.hint ? <div>Hint: {currentQuestion.hint}</div> : null}
+      </div>
 
-          {showChinese && (
-            <div className="center small muted">
-              {tiles[q.tile].zh} ({tiles[q.tile].jyutping}){' '}
-              <PronounceButton text={tiles[q.tile].zh} />
-            </div>
-          )}
-
-          <div className="options">
-            {q.options.map((option) => (
+      <div>
+        {Array.isArray(currentQuestion.choices)
+          ? currentQuestion.choices.map((choice) => (
               <button
-                key={option}
-                className="secondary"
-                disabled={recognitionAnswered}
-                onClick={() => setRecognitionSelected(option)}
+                key={choice}
                 type="button"
+                onClick={() => submitAnswer(choice)}
+                disabled={Boolean(lastEvaluation)}
               >
-                {option}
+                {choice}
               </button>
-            ))}
-          </div>
+            ))
+          : null}
+      </div>
 
-          {recognitionAnswered && (
-            <Feedback
-              correct={recognitionCorrect}
-              text={recognitionCorrect ? q.correct : q.wrong}
-              hint={q.hint}
-            />
-          )}
-
-          {recognitionAnswered && (
-            <button onClick={nextRecognition} type="button">
-              {recognitionIndex < recognitionQuestions.length - 1
-                ? 'Next Question'
-                : 'Finish Module'}
-            </button>
-          )}
-        </>
-      ) : (
-        <div className="feedback good">
-          <strong>Module complete.</strong>
-          <div className="small" style={{ marginTop: 6 }}>
-            Nice. Your first refactored React Mahjong module is working.
-          </div>
+      {lastEvaluation ? (
+        <div>
+          <div>{lastEvaluation.isCorrect ? "Correct" : "Incorrect"}</div>
+          {lastEvaluation.feedback?.message ? (
+            <div>{lastEvaluation.feedback.message}</div>
+          ) : null}
+          {lastEvaluation.feedback?.explanation ? (
+            <div>{lastEvaluation.feedback.explanation}</div>
+          ) : null}
+          <FullTile code={currentQuestion.tile} />
         </div>
-      )}
+      ) : null}
+
+      <div>
+        {lastEvaluation && hasMoreQuestions ? (
+          <button type="button" onClick={goNext}>
+            Next
+          </button>
+        ) : null}
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
     </div>
-  )
+  );
 }

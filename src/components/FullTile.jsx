@@ -1,9 +1,10 @@
 import React from "react";
 import { getTileMeta } from "../domain/tiles/tileCatalog.js";
+import Tile from "./Tile.jsx";
 
-export default function Tile({ code }) {
+export default function FullTile({ code }) {
   if (!code) {
-    return <div>?</div>;
+    return <div>Unknown tile.</div>;
   }
 
   let meta = null;
@@ -15,28 +16,26 @@ export default function Tile({ code }) {
   }
 
   if (!meta) {
-    return <div>?</div>;
+    return <div>Unknown tile.</div>;
   }
 
   return (
     <div
-      aria-label={meta.labelEn}
-      title={meta.labelEn}
       style={{
         display: "inline-flex",
         alignItems: "center",
-        justifyContent: "center",
-        minWidth: "56px",
-        minHeight: "72px",
-        padding: "8px",
+        gap: "12px",
+        padding: "10px",
         border: "1px solid #ccc",
         borderRadius: "8px",
-        backgroundColor: "#fff",
-        fontSize: "2rem",
-        lineHeight: 1,
       }}
     >
-      <span>{meta.glyph}</span>
+      <Tile code={code} />
+      <div>
+        <div>{meta.labelEn}</div>
+        <div>{meta.labelZh}</div>
+        <div>{meta.jyutping}</div>
+      </div>
     </div>
   );
 }

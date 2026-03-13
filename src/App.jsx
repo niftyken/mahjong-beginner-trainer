@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
-import { recognitionQuestions } from './data/recognitionQuestions'
 import { handQuestions } from './data/handQuestions'
 import { discardQuestions } from './data/discardQuestions'
 import { tenpaiQuestions } from './data/tenpaiQuestions'
-import RecognitionModule from './modules/RecognitionModule'
+import TrainerShell from './components/TrainerShell'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
 import HandModule from './modules/HandModule'
@@ -13,9 +12,6 @@ import TenpaiModule from './modules/TenpaiModule'
 export default function App() {
   const [showChinese, setShowChinese] = useState(true)
   const [activeTab, setActiveTab] = useState('recognition')
-
-  const [recognitionIndex, setRecognitionIndex] = useState(0)
-  const [recognitionSelected, setRecognitionSelected] = useState(null)
 
   const [handIndex, setHandIndex] = useState(0)
   const [handSelected, setHandSelected] = useState(null)
@@ -30,26 +26,15 @@ export default function App() {
 
   const completed = useMemo(
     () => ({
-      recognition: recognitionIndex >= recognitionQuestions.length,
       hand: handIndex >= handQuestions.length,
       discard: discardIndex >= discardQuestions.length,
       tenpai: tenpaiIndex >= tenpaiQuestions.length,
     }),
-    [recognitionIndex, handIndex, discardIndex, tenpaiIndex]
+    [handIndex, discardIndex, tenpaiIndex]
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
-  const progress = (completedCount / 4) * 100
-
-  function nextRecognition() {
-    if (recognitionIndex < recognitionQuestions.length - 1) {
-      setRecognitionIndex(recognitionIndex + 1)
-      setRecognitionSelected(null)
-    } else {
-      setRecognitionIndex(recognitionQuestions.length)
-      setRecognitionSelected(null)
-    }
-  }
+  const progress = (completedCount / 3) * 100
 
   function nextHand() {
     if (handIndex < handQuestions.length - 1) {
@@ -99,7 +84,7 @@ export default function App() {
 
           <div className="row" style={{ marginTop: 14 }}>
             <div className="small muted">
-              Progress: {completedCount} / 4 core modules complete
+              Progress: {completedCount} / 3 core modules complete
             </div>
             <button
               className="secondary"
@@ -183,13 +168,7 @@ export default function App() {
           </div>
 
           {activeTab === 'recognition' && (
-            <RecognitionModule
-              showChinese={showChinese}
-              recognitionIndex={recognitionIndex}
-              recognitionSelected={recognitionSelected}
-              setRecognitionSelected={setRecognitionSelected}
-              nextRecognition={nextRecognition}
-            />
+            <TrainerShell trainerId="RecognitionTrainer" />
           )}
 
           {activeTab === 'hand' && (
