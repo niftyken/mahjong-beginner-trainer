@@ -1,18 +1,13 @@
 import { useMemo, useState } from 'react'
-import { discardQuestions } from './data/discardQuestions'
 import { tenpaiQuestions } from './data/tenpaiQuestions'
 import TrainerShell from './components/TrainerShell'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
-import DiscardModule from './modules/DiscardModule'
 import TenpaiModule from './modules/TenpaiModule'
 
 export default function App() {
   const [showChinese, setShowChinese] = useState(true)
   const [activeTab, setActiveTab] = useState('recognition')
-
-  const [discardIndex, setDiscardIndex] = useState(0)
-  const [discardSelected, setDiscardSelected] = useState(null)
 
   const [tenpaiIndex, setTenpaiIndex] = useState(0)
   const [tenpaiSelected, setTenpaiSelected] = useState(null)
@@ -21,24 +16,13 @@ export default function App() {
 
   const completed = useMemo(
     () => ({
-      discard: discardIndex >= discardQuestions.length,
       tenpai: tenpaiIndex >= tenpaiQuestions.length,
     }),
-    [discardIndex, tenpaiIndex]
+    [tenpaiIndex]
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
-  const progress = (completedCount / 2) * 100
-
-  function nextDiscard() {
-    if (discardIndex < discardQuestions.length - 1) {
-      setDiscardIndex(discardIndex + 1)
-      setDiscardSelected(null)
-    } else {
-      setDiscardIndex(discardQuestions.length)
-      setDiscardSelected(null)
-    }
-  }
+  const progress = completedCount * 100
 
   function nextTenpai() {
     if (tenpaiIndex < tenpaiQuestions.length - 1) {
@@ -68,7 +52,7 @@ export default function App() {
 
           <div className="row" style={{ marginTop: 14 }}>
             <div className="small muted">
-              Progress: {completedCount} / 2 tracked core modules complete
+              Progress: {completedCount} / 1 tracked core module complete
             </div>
             <button
               className="secondary"
@@ -160,13 +144,7 @@ export default function App() {
           )}
 
           {activeTab === 'discard' && (
-            <DiscardModule
-              showChinese={showChinese}
-              discardIndex={discardIndex}
-              discardSelected={discardSelected}
-              setDiscardSelected={setDiscardSelected}
-              nextDiscard={nextDiscard}
-            />
+            <TrainerShell trainerId="DiscardTrainer" />
           )}
 
           {activeTab === 'tenpai' && (

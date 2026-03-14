@@ -1,75 +1,110 @@
-import Tile from '../components/Tile'
-import Feedback from '../components/Feedback'
-import { discardQuestions } from '../data/discardQuestions'
+import React from "react";
+import Tile from "../components/Tile.jsx";
 
 export default function DiscardModule({
-  showChinese,
-  discardIndex,
-  discardSelected,
-  setDiscardSelected,
-  nextDiscard,
+  moduleConfig,
+  currentQuestion,
+  currentIndex,
+  totalQuestions,
+  score,
+  streak,
+  lastEvaluation,
+  submitAnswer,
+  goNext,
+  restart,
 }) {
-  const q = discardQuestions[Math.min(discardIndex, discardQuestions.length - 1)]
-  const discardAnswered = discardSelected !== null
-  const discardCorrect = q.answers.includes(discardSelected)
+  const hasMoreQuestions = currentIndex < totalQuestions - 1;
+  const allowedChoices = new Set(
+    Array.isArray(currentQuestion?.choices) ? currentQuestion.choices : []
+  );
+
+  if (!currentQuestion) {
+    return (
+      <div>
+        <h2>{moduleConfig?.title || "Discard Trainer"}</h2>
+        <div>No questions available.</div>
+
+        <div>
+          <div>
+            Question: {totalQuestions > 0 ? currentIndex + 1 : 0} of {totalQuestions}
+          </div>
+          <div>Correct: {score.correct}</div>
+          <div>Incorrect: {score.incorrect}</div>
+          <div>Points: {score.points}</div>
+          <div>Current Streak: {streak.current}</div>
+          <div>Best Streak: {streak.best}</div>
+        </div>
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="card stack">
+    <div>
+      <h2>{moduleConfig?.title || "Discard Trainer"}</h2>
+      {moduleConfig?.description ? <p>{moduleConfig.description}</p> : null}
+
       <div>
-        <h2>Module 3: Beginner Discard Trainer</h2>
-        <p className="muted small">
-          Practice a simple decision rule: keep connected suited tiles and be cautious with isolated honor tiles.
-        </p>
+        <div>
+          Question: {currentIndex + 1} of {totalQuestions}
+        </div>
+        <div>Correct: {score.correct}</div>
+        <div>Incorrect: {score.incorrect}</div>
+        <div>Points: {score.points}</div>
+        <div>Current Streak: {streak.current}</div>
+        <div>Best Streak: {streak.best}</div>
       </div>
 
-      {discardIndex < discardQuestions.length ? (
-        <>
-          <div className="small">
-            <strong>{q.title}</strong>
-          </div>
+      <div>
+        <div>{currentQuestion.prompt || "Choose the best tile to discard."}</div>
+        <div>
+          {Array.isArray(currentQuestion.hand)
+            ? currentQuestion.hand.map((code, index) => {
+                const isClickable = allowedChoices.has(code);
+                const isDisabled = Boolean(lastEvaluation) || !isClickable;
 
-          <div className="hand-grid">
-            {q.hand.map((code, index) => (
-              <Tile
-                key={`${code}-${index}`}
-                code={code}
-                showChinese={showChinese}
-                selected={discardSelected === code}
-                onClick={() => !discardAnswered && setDiscardSelected(code)}
-              />
-            ))}
-          </div>
-
-          {!discardAnswered && (
-            <div className="small muted">
-              Tap the tile you would discard first.
-            </div>
-          )}
-
-          {discardAnswered && (
-            <Feedback
-              correct={discardCorrect}
-              text={discardCorrect ? q.correct : q.wrong}
-              hint={q.hint}
-            />
-          )}
-
-          {discardAnswered && (
-            <button onClick={nextDiscard} type="button">
-              {discardIndex < discardQuestions.length - 1
-                ? 'Next Hand'
-                : 'Finish Module'}
-            </button>
-          )}
-        </>
-      ) : (
-        <div className="feedback good">
-          <strong>Module complete.</strong>
-          <div className="small" style={{ marginTop: 6 }}>
-            Nice. You are beginning to think about tile efficiency, not just hand recognition.
-          </div>
+                return (
+                  <button
+                    key={`${code}-${index}`}
+                    type="button"
+                    onClick={() => submitAnswer(code)}
+                    disabled={isDisabled}
+                    aria-label={
+                      isClickable ? `Discard ${code}` : `Tile ${code} not selectable`
+                    }
+                  >
+                    <Tile code={code} />
+                  </button>
+                );
+              })
+            : null}
         </div>
-      )}
+        {currentQuestion.hint ? <div>Hint: {currentQuestion.hint}</div> : null}
+      </div>
+
+      {lastEvaluation ? (
+        <div>
+          <div>{lastEvaluation.isCorrect ? "Correct" : "Incorrect"}</div>
+          {lastEvaluation.feedback?.explanation ? (
+            <div>{lastEvaluation.feedback.explanation}</div>
+          ) : null}
+        </div>
+      ) : null}
+
+      <div>
+        {lastEvaluation && hasMoreQuestions ? (
+          <button type="button" onClick={goNext}>
+            Next
+          </button>
+        ) : null}
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
     </div>
-  )
+  );
 }
