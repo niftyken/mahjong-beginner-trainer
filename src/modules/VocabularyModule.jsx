@@ -20,13 +20,26 @@ export default function VocabularyModule({
 
         <div className="tile-grid" style={{ marginTop: 14 }}>
           {tileOrder.map((code) => (
-            <Tile
+            <button
               key={code}
-              code={code}
-              showChinese={showChinese}
-              selected={selectedTile === code}
+              type="button"
               onClick={() => setSelectedTile(code)}
-            />
+              aria-pressed={selectedTile === code}
+              aria-label={`Select ${code}`}
+              style={{
+                background: 'transparent',
+                border: selectedTile === code ? '2px solid #2563eb' : 'none',
+                padding: 0,
+                borderRadius: '8px',
+                cursor: 'pointer',
+              }}
+            >
+              <Tile
+                code={code}
+                showChinese={showChinese}
+                selected={selectedTile === code}
+              />
+            </button>
           ))}
         </div>
       </div>

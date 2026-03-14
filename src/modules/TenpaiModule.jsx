@@ -41,13 +41,27 @@ export default function TenpaiModule({
 
           <div className="tile-grid">
             {q.choices.map((code) => (
-              <Tile
+              <button
                 key={code}
-                code={code}
-                showChinese={showChinese}
-                selected={tenpaiSelected === code}
+                type="button"
                 onClick={() => !tenpaiAnswered && setTenpaiSelected(code)}
-              />
+                disabled={tenpaiAnswered}
+                aria-pressed={tenpaiSelected === code}
+                aria-label={`Select ${code}`}
+                style={{
+                  background: 'transparent',
+                  border: tenpaiSelected === code ? '2px solid #2563eb' : 'none',
+                  padding: 0,
+                  borderRadius: '8px',
+                  cursor: tenpaiAnswered ? 'default' : 'pointer',
+                }}
+              >
+                <Tile
+                  code={code}
+                  showChinese={showChinese}
+                  selected={tenpaiSelected === code}
+                />
+              </button>
             ))}
           </div>
 
