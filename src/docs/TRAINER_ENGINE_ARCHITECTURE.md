@@ -1,4 +1,3 @@
-```markdown
 # Mahjong Beginner Trainer  
 ## Trainer Engine Architecture
 
@@ -395,5 +394,4 @@ The trainer engine is designed to:
 
 This separation enables maintainable growth of the project.
 
-```
 
