@@ -1,12 +1,15 @@
 import { recognitionQuestions } from "../../data/recognitionQuestions.js";
 import { handQuestions } from "../../data/handQuestions.js";
 import { discardQuestions } from "../../data/discardQuestions.js";
+import { tenpaiQuestions } from "../../data/tenpaiQuestions.js";
 import { checkRecognitionAnswer } from "../evaluators/checkRecognitionAnswer.js";
 import { checkHandAnswer } from "../evaluators/checkHandAnswer.js";
 import { checkDiscardAnswer } from "../evaluators/checkDiscardAnswer.js";
+import { checkTenpaiAnswer } from "../evaluators/checkTenpaiAnswer.js";
 import RecognitionModule from "../../modules/RecognitionModule.jsx";
 import HandModule from "../../modules/HandModule.jsx";
 import DiscardModule from "../../modules/DiscardModule.jsx";
+import TenpaiModule from "../../modules/TenpaiModule.jsx";
 
 export const MODULE_REGISTRY = {
   RecognitionTrainer: {
@@ -34,5 +37,14 @@ export const MODULE_REGISTRY = {
     dataset: discardQuestions,
     evaluator: checkDiscardAnswer,
     component: DiscardModule,
+  },
+
+  TenpaiTrainer: {
+    id: "TenpaiTrainer",
+    title: "Tenpai / One-Tile-Away",
+    description: "Choose the tile that completes the nearly finished hand.",
+    dataset: tenpaiQuestions,
+    evaluator: checkTenpaiAnswer,
+    component: TenpaiModule,
   },
 };

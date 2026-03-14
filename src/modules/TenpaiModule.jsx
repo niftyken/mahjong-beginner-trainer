@@ -1,94 +1,140 @@
-import Tile from '../components/Tile'
-import Feedback from '../components/Feedback'
-import { tenpaiQuestions } from '../data/tenpaiQuestions'
+import React, { useEffect, useState } from "react";
+import Tile from "../components/Tile.jsx";
+import Feedback from "../components/Feedback.jsx";
 
 export default function TenpaiModule({
-  showChinese,
-  tenpaiIndex,
-  tenpaiSelected,
-  setTenpaiSelected,
-  nextTenpai,
+  moduleConfig,
+  currentQuestion,
+  currentIndex,
+  totalQuestions,
+  score,
+  streak,
+  lastEvaluation,
+  submitAnswer,
+  goNext,
+  restart,
 }) {
-  const q = tenpaiQuestions[Math.min(tenpaiIndex, tenpaiQuestions.length - 1)]
-  const tenpaiAnswered = tenpaiSelected !== null
-  const tenpaiCorrect = tenpaiSelected === q.answer
+  const [selectedChoice, setSelectedChoice] = useState(null);
+
+  useEffect(() => {
+    setSelectedChoice(null);
+  }, [currentQuestion?.hand, currentQuestion?.answer]);
+
+  const hasMoreQuestions = currentIndex < totalQuestions - 1;
+
+  if (!currentQuestion) {
+    return (
+      <div>
+        <h2>{moduleConfig?.title || "Tenpai Trainer"}</h2>
+        <div>No questions available.</div>
+
+        <div>
+          <div>
+            Question: {totalQuestions > 0 ? currentIndex + 1 : 0} of {totalQuestions}
+          </div>
+          <div>Correct: {score.correct}</div>
+          <div>Incorrect: {score.incorrect}</div>
+          <div>Points: {score.points}</div>
+          <div>Current Streak: {streak.current}</div>
+          <div>Best Streak: {streak.best}</div>
+        </div>
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
+    );
+  }
+
+  function handleChoiceSelect(code) {
+    if (lastEvaluation) {
+      return;
+    }
+
+    setSelectedChoice(code);
+    submitAnswer(code);
+  }
 
   return (
     <div className="card stack">
       <div>
-        <h2>Module 4: Tenpai / One-Tile-Away Trainer</h2>
-        <p className="muted small">
-          Practice recognizing the tile that completes a nearly finished hand.
-        </p>
+        <h2>{moduleConfig?.title || "Tenpai Trainer"}</h2>
+        {moduleConfig?.description ? (
+          <p className="muted small">{moduleConfig.description}</p>
+        ) : null}
       </div>
 
-      {tenpaiIndex < tenpaiQuestions.length ? (
-        <>
-          <div className="small">
-            <strong>{q.title}</strong>
-          </div>
+      <div>
+        <div>
+          Question: {currentIndex + 1} of {totalQuestions}
+        </div>
+        <div>Correct: {score.correct}</div>
+        <div>Incorrect: {score.incorrect}</div>
+        <div>Points: {score.points}</div>
+        <div>Current Streak: {streak.current}</div>
+        <div>Best Streak: {streak.best}</div>
+      </div>
 
-          <div className="hand-grid one-away-grid">
-            {q.hand.map((code, index) => (
-              <Tile
-                key={`${code}-${index}`}
-                code={code}
-                showChinese={showChinese}
-              />
-            ))}
-            <div className="empty-slot">?</div>
-          </div>
+      <div className="small">
+        <strong>{currentQuestion.title}</strong>
+      </div>
 
-          <div className="tile-grid">
-            {q.choices.map((code) => (
+      <div className="hand-grid one-away-grid">
+        {Array.isArray(currentQuestion.hand)
+          ? currentQuestion.hand.map((code, index) => (
+              <Tile key={`${code}-${index}`} code={code} />
+            ))
+          : null}
+        <div className="empty-slot">?</div>
+      </div>
+
+      <div className="tile-grid">
+        {Array.isArray(currentQuestion.choices)
+          ? currentQuestion.choices.map((code) => (
               <button
                 key={code}
                 type="button"
-                onClick={() => !tenpaiAnswered && setTenpaiSelected(code)}
-                disabled={tenpaiAnswered}
-                aria-pressed={tenpaiSelected === code}
+                onClick={() => handleChoiceSelect(code)}
+                disabled={Boolean(lastEvaluation)}
+                aria-pressed={selectedChoice === code}
                 aria-label={`Select ${code}`}
                 style={{
-                  background: 'transparent',
-                  border: tenpaiSelected === code ? '2px solid #2563eb' : 'none',
+                  background: "transparent",
+                  border: selectedChoice === code ? "2px solid #2563eb" : "none",
                   padding: 0,
-                  borderRadius: '8px',
-                  cursor: tenpaiAnswered ? 'default' : 'pointer',
+                  borderRadius: "8px",
+                  cursor: lastEvaluation ? "default" : "pointer",
                 }}
               >
-                <Tile
-                  code={code}
-                  showChinese={showChinese}
-                  selected={tenpaiSelected === code}
-                />
+                <Tile code={code} />
               </button>
-            ))}
-          </div>
+            ))
+          : null}
+      </div>
 
-          {tenpaiAnswered && (
-            <Feedback
-              correct={tenpaiCorrect}
-              text={tenpaiCorrect ? q.correct : q.wrong}
-              hint={q.hint}
-            />
-          )}
+      {currentQuestion.hint ? (
+        <div className="hint small">{currentQuestion.hint}</div>
+      ) : null}
 
-          {tenpaiAnswered && (
-            <button onClick={nextTenpai} type="button">
-              {tenpaiIndex < tenpaiQuestions.length - 1
-                ? 'Next Hand'
-                : 'Finish Module'}
-            </button>
-          )}
-        </>
-      ) : (
-        <div className="feedback good">
-          <strong>Module complete.</strong>
-          <div className="small" style={{ marginTop: 6 }}>
-            Nice. You are now practicing one of the most useful real-game Mahjong skills: recognizing the winning tile.
-          </div>
-        </div>
-      )}
+      {lastEvaluation ? (
+        <Feedback
+          correct={lastEvaluation.isCorrect}
+          text={lastEvaluation.feedback?.explanation || ""}
+          hint={currentQuestion.hint || ""}
+        />
+      ) : null}
+
+      <div>
+        {lastEvaluation && hasMoreQuestions ? (
+          <button type="button" onClick={goNext}>
+            Next Hand
+          </button>
+        ) : null}
+
+        <button type="button" onClick={restart}>
+          Restart
+        </button>
+      </div>
     </div>
-  )
+  );
 }

@@ -1,38 +1,20 @@
 import { useMemo, useState } from 'react'
-import { tenpaiQuestions } from './data/tenpaiQuestions'
 import TrainerShell from './components/TrainerShell'
 import VocabularyModule from './modules/VocabularyModule'
 import PhraseModule from './modules/PhraseModule'
-import TenpaiModule from './modules/TenpaiModule'
 
 export default function App() {
   const [showChinese, setShowChinese] = useState(true)
   const [activeTab, setActiveTab] = useState('recognition')
-
-  const [tenpaiIndex, setTenpaiIndex] = useState(0)
-  const [tenpaiSelected, setTenpaiSelected] = useState(null)
-
   const [selectedTile, setSelectedTile] = useState('b2')
 
   const completed = useMemo(
-    () => ({
-      tenpai: tenpaiIndex >= tenpaiQuestions.length,
-    }),
-    [tenpaiIndex]
+    () => ({}),
+    []
   )
 
   const completedCount = Object.values(completed).filter(Boolean).length
   const progress = completedCount * 100
-
-  function nextTenpai() {
-    if (tenpaiIndex < tenpaiQuestions.length - 1) {
-      setTenpaiIndex(tenpaiIndex + 1)
-      setTenpaiSelected(null)
-    } else {
-      setTenpaiIndex(tenpaiQuestions.length)
-      setTenpaiSelected(null)
-    }
-  }
 
   return (
     <div className="container">
@@ -148,13 +130,7 @@ export default function App() {
           )}
 
           {activeTab === 'tenpai' && (
-            <TenpaiModule
-              showChinese={showChinese}
-              tenpaiIndex={tenpaiIndex}
-              tenpaiSelected={tenpaiSelected}
-              setTenpaiSelected={setTenpaiSelected}
-              nextTenpai={nextTenpai}
-            />
+            <TrainerShell trainerId="TenpaiTrainer" />
           )}
 
           {activeTab === 'vocabulary' && (
